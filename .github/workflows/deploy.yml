@@ -1,0 +1,16 @@
+name: Deploy FastAPI App
+
+on:
+    push:
+        branches: [simulate]
+
+jobs:
+    deploy:
+        runs-on: self-hosted
+        steps:
+            - name: Checkout latest code
+              uses: actions/checkout@v3
+
+            - name: Run FastAPI app
+              run: |
+                  ./run.sh
