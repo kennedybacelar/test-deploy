@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-# Go to repo root (in case script is called from elsewhere)
+# Go to repo root (the folder where this script lives)
 cd "$(dirname "$0")"
 
 # Create or reuse venv
@@ -22,5 +22,9 @@ if pgrep -f "uvicorn main:app" > /dev/null; then
 fi
 
 # Start FastAPI in background
-nohup uvicorn main:app --host 0.0.0.0 --port 8000 > app.log 2>&1 &
+# Write logs inside a "logs" folder in repo root
+mkdir -p logs
+nohup uvicorn main:app --host 0.0.0.0 --port 8000 > logs/app.log 2>&1 &
+
 echo "FastAPI running on http://localhost:8000"
+echo "Logs at $(pwd)/logs/app.log"
