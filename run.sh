@@ -26,5 +26,15 @@ fi
 mkdir -p logs
 nohup uvicorn main:app --host 0.0.0.0 --port 8000 > logs/app.log 2>&1 &
 
-echo "FastAPI running on http://localhost:8000"
-echo "Logs at $(pwd)/logs/app.log"
+PID=$!
+disown $PID
+sleep 2
+
+# Verify it's running
+if ps -p $PID > /dev/null; then
+    echo "FastAPI running on http://localhost:8000 (PID: $PID)"
+    echo "Logs at $(pwd)/logs/app.log"
+else
+    echo "Failed to start FastAPI. Check logs at $(pwd)/logs/app.log"
+    exit 1
+fi
