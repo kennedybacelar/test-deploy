@@ -2,7 +2,7 @@ name: Deploy FastAPI App
 
 on:
     push:
-        branches: [simulate]
+        branches: [master]
 
 jobs:
     deploy:
